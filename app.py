@@ -2,7 +2,6 @@ import streamlit as st
 import openai
 import os
 from sentence_transformers import SentenceTransformer
-
 from dotenv import load_dotenv
 
 # Load environment variables from .env file if available
@@ -29,7 +28,6 @@ def get_openai_response(prompt):
 
 st.title("General Bot")
 
-
 prompt = st.text_input("Enter your question here:")
 
 if st.button("Get Response"):
@@ -42,9 +40,10 @@ if st.button("Get Response"):
                     openai_response = get_openai_response(prompt)
                     st.subheader("Response : ")
                     st.write(openai_response)
-                except openai.error.AuthenticationError as e:
-                    st.error(f"OpenAI Authentication Error: {e}")
+                except Exception as e:
+                    st.error(f"An error occurred: {e}")
     else:
         st.warning("Please enter a question to get a response.")
+
 st.sidebar.subheader("Disclaimer:")
-st.sidebar.write("This chatbot is powered by OpenAI's GPT-4 model and Google's Gemini-Pro. The responses generated may not always be accurate or reliable. Use the information provided at your own discretion")
+st.sidebar.write("This chatbot is powered by OpenAI's GPT-4 model and Google's Gemini-Pro. The responses generated may not always be accurate or reliable. Use the information provided at your own discretion.")
