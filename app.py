@@ -22,7 +22,7 @@ def get_openai_response(prompt):
     response = openai.ChatCompletion.create(
         model="gpt-4",
         messages=[{"role": "user", "content": prompt}],
-        max_tokens=150
+        max_tokens=500
     )
     return response['choices'][0]['message']['content'].strip()
 
