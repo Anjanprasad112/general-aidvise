@@ -40,13 +40,20 @@ def get_web_search_results(query):
         return [f"Error during web search: {e}"]
 
 # Function to scrape content from a URL
-def scrape_content(url):
+def scrape_content(url, max_paragraphs=5, max_chars=2000):
     try:
         response = requests.get(url)
         soup = BeautifulSoup(response.text, 'html.parser')
         paragraphs = soup.find_all('p')
-        content = ' '.join([para.get_text() for para in paragraphs])
-        return content
+        content = ''
+        char_count = 0
+        for para in paragraphs[:max_paragraphs]:
+            text = para.get_text()
+            char_count += len(text)
+            if char_count > max_chars:
+                break
+            content += text + ' '
+        return content.strip()
     except Exception as e:
         return f"Error scraping {url}: {e}"
 
